@@ -12,7 +12,6 @@ const Profile = () => {
   const username = localStorage.getItem("username");
 
   useEffect(() => {
-    // 加载用户的头像
     const loadAvatar = async () => {
       const token = localStorage.getItem("token");
       try {
@@ -84,63 +83,71 @@ const Profile = () => {
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-3xl text-center font-bold mb-6">Profile</h1>
-      <div className="max-w-md mx-auto">
-        <div className="mb-4">
-          <label className="block text-gray-700">Username</label>
-          <input
-            type="text"
-            value={username}
-            disabled
-            className="border p-2 rounded w-full bg-gray-100"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Avatar</label>
+      <div className="flex justify-start">
+        {/* 左边：头像和用户名 */}
+        <div className="w-1/3 flex flex-col items-center">
           {avatarUrl && (
             <img
               src={`http://localhost:5000${avatarUrl}`}
               alt="Avatar"
-              className="mb-4 w-20 h-20 rounded-full"
+              className="mb-4 w-32 h-32 rounded-full"
             />
           )}
-          <input
-            type="file"
-            onChange={handleAvatarUpload}
-            className="border p-2 rounded w-full"
-          />
+          <div className="text-lg font-semibold mb-4">{username}</div>
+          <div className="mb-4">
+            <input
+              type="file"
+              id="avatarUpload"
+              className="hidden"
+              onChange={handleAvatarUpload}
+            />
+            <label
+              htmlFor="avatarUpload"
+              className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 cursor-pointer"
+            >
+              Upload Avatar
+            </label>
+          </div>
         </div>
-        <form onSubmit={handlePasswordChange}>
-          <div className="mb-4">
-            <label className="block text-gray-700">New Password</label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Confirm Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700"
-          >
-            Update Password
-          </button>
-        </form>
-        <button
-          onClick={() => navigate("/")}
-          className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 mt-4"
-        >
-          Back to Home
-        </button>
+
+        {/* 右边：修改密码和按钮 */}
+        <div className="w-2/3">
+          <form onSubmit={handlePasswordChange} className="mb-4">
+            <div className="mb-4">
+              <label className="block text-gray-700">New Password</label>
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="border p-2 rounded w-3/5" // 使输入框更短
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">Confirm Password</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="border p-2 rounded w-3/5" // 使输入框更短
+              />
+            </div>
+            {/* 按钮容器，确保按钮大小和对齐 */}
+            <div className="flex space-x-4">
+              <button
+                type="submit"
+                className="bg-indigo-600 text-white py-2 px-8 w-fit rounded hover:bg-indigo-700"
+              >
+                Update Password
+              </button>
+              <button
+                onClick={() => navigate("/")}
+                className="bg-green-600 text-white py-2 px-8 w-fit rounded hover:bg-green-700"
+              >
+                Back to Home
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
