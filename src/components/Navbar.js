@@ -6,30 +6,49 @@ const Navbar = ({ username, avatar, onLogout }) => {
   return (
     <nav className="bg-indigo-600 p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
+        {/* Logo or Title */}
         <Link to="/" className="text-white font-bold text-xl">
           Library System
         </Link>
-        <div className="flex items-center">
-          {avatar && (
-            <img
-              src={URL.createObjectURL(avatar)}
-              alt="avatar"
-              className="w-8 h-8 rounded-full mr-2"
-            />
+
+        {/* Right Side of Navbar */}
+        <div className="flex items-center space-x-4">
+          {/* Show Borrowed Books Link when user is logged in */}
+          {username && (
+            <Link
+              to="/borrowed-books"
+              className="text-white text-sm font-bold hover:text-gray-200"
+            >
+              Borrowed Books
+            </Link>
           )}
+
+          {/* User Avatar and Dropdown */}
           {username ? (
-            <UserDropdown username={username} onLogout={onLogout} />
+            <div className="flex items-center space-x-2">
+              {/* Display avatar if it exists */}
+              {avatar && (
+                <img
+                  src={avatar}
+                  alt="avatar"
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              )}
+              {/* User Dropdown */}
+              <UserDropdown username={username} onLogout={onLogout} />
+            </div>
           ) : (
             <>
+              {/* If no user is logged in, show Register and Login buttons */}
               <Link
                 to="/register"
-                className="text-white px-4 text-sm font-bold text-gray-700"
+                className="text-white text-sm font-bold hover:text-gray-200"
               >
                 Register
               </Link>
               <Link
                 to="/login"
-                className="text-white px-4 text-sm font-bold text-gray-700"
+                className="text-white text-sm font-bold hover:text-gray-200"
               >
                 Login
               </Link>
