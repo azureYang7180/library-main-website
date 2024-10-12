@@ -5,6 +5,8 @@ import UserRegister from "./components/UserRegister";
 import UserLogin from "./components/UserLogin";
 import BookList from "./components/BookList";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -13,13 +15,14 @@ const App = () => {
     const token = localStorage.getItem("token");
     const savedUsername = localStorage.getItem("username");
     if (token && savedUsername) {
-      setUsername(savedUsername); // 设定用户名
+      setUsername(savedUsername);
     }
   }, []);
 
   return (
     <Router>
       <AppContent username={username} setUsername={setUsername} />
+      <ToastContainer /> {/* ToastContainer 在整个应用中可用 */}
     </Router>
   );
 };
@@ -30,8 +33,9 @@ const AppContent = ({ username, setUsername }) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
-    setUsername(""); // 清空用户名
-    navigate("/login"); // 使用 useNavigate 进行页面跳转
+    setUsername("");
+    toast.success("Logout successful!");
+    navigate("/login");
   };
 
   return (

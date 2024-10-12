@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 
 const UserLogin = ({ setUsername }) => {
   const [email, setEmail] = useState("");
@@ -20,7 +19,7 @@ const UserLogin = ({ setUsername }) => {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
-      setUsername(data.username); // 更新用户名状态
+      setUsername(data.username);
       toast.success("Login successful!");
       navigate("/");
     } catch (error) {
@@ -30,7 +29,6 @@ const UserLogin = ({ setUsername }) => {
 
   return (
     <div className="container mx-auto py-10">
-      <ToastContainer />
       <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto">
         <div className="mb-4">

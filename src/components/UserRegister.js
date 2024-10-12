@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 
 const UserRegister = ({ setUsername }) => {
-  const [username, setNewUsername] = useState("");
+  const [username, setUserNameInput] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const API_BASE_URL = "http://localhost:5000/api";
@@ -22,7 +21,7 @@ const UserRegister = ({ setUsername }) => {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
-      setUsername(data.username); // 更新用户名状态
+      setUsername(data.username);
       toast.success("Registration successful!");
       navigate("/");
     } catch (error) {
@@ -32,7 +31,6 @@ const UserRegister = ({ setUsername }) => {
 
   return (
     <div className="container mx-auto py-10">
-      <ToastContainer />
       <h1 className="text-3xl text-center font-bold mb-6">Register</h1>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto">
         <div className="mb-4">
@@ -40,7 +38,7 @@ const UserRegister = ({ setUsername }) => {
           <input
             type="text"
             value={username}
-            onChange={(e) => setNewUsername(e.target.value)}
+            onChange={(e) => setUserNameInput(e.target.value)}
             className="border p-2 rounded w-full"
           />
         </div>
