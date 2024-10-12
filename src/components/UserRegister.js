@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
-const UserRegister = () => {
-  const [username, setUsername] = useState("");
+const UserRegister = ({ setUsername }) => {
+  const [username, setNewUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const API_BASE_URL = "http://localhost:5000/api";
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const { data } = await axios.post(`${API_BASE_URL}/users/register`, {
         username,
@@ -20,7 +21,10 @@ const UserRegister = () => {
       });
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.username);
+      setUsername(data.username); // 更新用户名状态
       toast.success("Registration successful!");
+      navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred");
     }
@@ -36,7 +40,7 @@ const UserRegister = () => {
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setNewUsername(e.target.value)}
             className="border p-2 rounded w-full"
           />
         </div>

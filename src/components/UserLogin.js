@@ -1,25 +1,30 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
-const UserLogin = () => {
+const UserLogin = ({ setUsername }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const API_BASE_URL = "http://localhost:5000/api";
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await axios.post(`${API_BASE_URL}/users/login`, {
+      const { data } = await axios.post(`${API_BASE_URL}/users/login`, {
         email,
         password,
       });
 
-      toast.success("Login successful!"); // 成功时弹出消息
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.username);
+      setUsername(data.username); // 更新用户名状态
+      toast.success("Login successful!");
+      navigate("/");
     } catch (error) {
-      toast.error(error.response?.data?.message || "An error occurred"); // 失败时弹出消息
+      toast.error(error.response?.data?.message || "An error occurred");
     }
   };
 
