@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserDropdown = ({ username, onLogout }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -15,16 +17,16 @@ const UserDropdown = ({ username, onLogout }) => {
       {dropdownOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
           <button
+            onClick={() => navigate("/settings")}
+            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            Settings
+          </button>
+          <button
             onClick={onLogout}
             className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
           >
             Logout
-          </button>
-          <button
-            onClick={() => alert("Settings page coming soon!")}
-            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          >
-            Settings
           </button>
         </div>
       )}

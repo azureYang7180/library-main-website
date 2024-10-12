@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import UserRegister from "./components/UserRegister";
 import UserLogin from "./components/UserLogin";
 import BookList from "./components/BookList";
+import Settings from "./components/Settings";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,7 +23,7 @@ const App = () => {
   return (
     <Router>
       <AppContent username={username} setUsername={setUsername} />
-      <ToastContainer /> {/* ToastContainer 在整个应用中可用 */}
+      <ToastContainer />
     </Router>
   );
 };
@@ -53,6 +54,7 @@ const AppContent = ({ username, setUsername }) => {
             element={<UserLogin setUsername={setUsername} />}
           />
           <Route path="/books" element={<BookList />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
     </>
