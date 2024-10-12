@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 
 const BookItem = ({ book }) => {
   const [copiesAvailable, setCopiesAvailable] = useState(book.copiesAvailable);
@@ -117,11 +120,9 @@ const BookItem = ({ book }) => {
       <div className="p-4 bg-gray-50 flex justify-between">
         <button
           onClick={handleFavoriteToggle}
-          className={`${
-            isFavorited ? "text-yellow-500" : "text-gray-500"
-          } text-lg`}
+          className="text-yellow-500 text-lg hover:scale-105 transition duration-300 transform"
         >
-          {isFavorited ? "★" : "☆"}
+          <FontAwesomeIcon icon={isFavorited ? solidStar : regularStar} />
         </button>
         <button
           onClick={handleBorrow}
