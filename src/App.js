@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import UserRegister from "./components/UserRegister";
 import UserLogin from "./components/UserLogin";
 import BookList from "./components/BookList";
-import Settings from "./components/Settings";
+import Profile from "./components/Profile";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -54,7 +54,7 @@ const AppContent = ({ username, setUsername }) => {
             element={<UserLogin setUsername={setUsername} />}
           />
           <Route path="/books" element={<BookList />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </>

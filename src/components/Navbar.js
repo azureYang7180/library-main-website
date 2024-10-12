@@ -2,14 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 import UserDropdown from "./UserDropdown";
 
-const Navbar = ({ username, onLogout }) => {
+const Navbar = ({ username, avatar, onLogout }) => {
   return (
-    <nav className="bg-indigo-600 p-4 shadow-lg w-full">
+    <nav className="bg-indigo-600 p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-white font-bold text-xl">
           Library System
         </Link>
-        <div>
+        <div className="flex items-center">
+          {avatar && (
+            <img
+              src={URL.createObjectURL(avatar)}
+              alt="avatar"
+              className="w-8 h-8 rounded-full mr-2"
+            />
+          )}
           {username ? (
             <UserDropdown username={username} onLogout={onLogout} />
           ) : (
