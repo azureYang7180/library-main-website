@@ -28,14 +28,10 @@ const BookList = () => {
 
   return (
     <div className="min-h-screen">
-      {" "}
-      {/* 去掉 bg-gray-100 */}
       <div className="container mx-auto py-10">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Library Books
         </h1>
-
-        {/* 搜索框 */}
         <div className="flex justify-center mb-6">
           <input
             type="text"
