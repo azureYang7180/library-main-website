@@ -21,10 +21,16 @@ const Navbar = ({ username, avatar, onLogout }) => {
             <UserDropdown username={username} onLogout={onLogout} />
           ) : (
             <>
-              <Link to="/register" className="text-white px-4">
+              <Link
+                to="/register"
+                className="text-white px-4 text-sm font-bold text-gray-700"
+              >
                 Register
               </Link>
-              <Link to="/login" className="text-white px-4">
+              <Link
+                to="/login"
+                className="text-white px-4 text-sm font-bold text-gray-700"
+              >
                 Login
               </Link>
             </>

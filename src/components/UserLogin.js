@@ -49,12 +49,14 @@ const UserLogin = ({ setUsername }) => {
             className="border p-2 rounded w-full"
           />
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-        >
-          Login
-        </button>
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="bg-indigo-600 text-white py-2 px-4 w-full rounded hover:bg-indigo-500"
+          >
+            Login
+          </button>
+        </div>
       </form>
     </div>
   );

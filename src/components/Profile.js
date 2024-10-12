@@ -7,7 +7,7 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [avatar, setAvatar] = useState(null);
-  const [avatarUrl, setAvatarUrl] = useState(""); // 存储头像URL
+  const [avatarUrl, setAvatarUrl] = useState("");
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
 
@@ -73,7 +73,7 @@ const Profile = () => {
         }
       );
 
-      setAvatarUrl(data.avatar); // 更新头像URL
+      setAvatarUrl(data.avatar);
       toast.success("Avatar uploaded successfully!");
     } catch (error) {
       toast.error("Error uploading avatar");
@@ -84,7 +84,6 @@ const Profile = () => {
     <div className="container mx-auto py-10">
       <h1 className="text-3xl text-center font-bold mb-6">Profile</h1>
       <div className="flex justify-start">
-        {/* 左边：头像和用户名 */}
         <div className="w-1/3 flex flex-col items-center">
           {avatarUrl && (
             <img
@@ -109,8 +108,6 @@ const Profile = () => {
             </label>
           </div>
         </div>
-
-        {/* 右边：修改密码和按钮 */}
         <div className="w-2/3">
           <form onSubmit={handlePasswordChange} className="mb-4">
             <div className="mb-4">
@@ -119,7 +116,7 @@ const Profile = () => {
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="border p-2 rounded w-3/5" // 使输入框更短
+                className="border p-2 rounded w-3/5"
               />
             </div>
             <div className="mb-4">
@@ -128,10 +125,10 @@ const Profile = () => {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="border p-2 rounded w-3/5" // 使输入框更短
+                className="border p-2 rounded w-3/5"
               />
             </div>
-            {/* 按钮容器，确保按钮大小和对齐 */}
+
             <div className="flex space-x-4">
               <button
                 type="submit"
