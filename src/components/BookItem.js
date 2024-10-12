@@ -5,7 +5,9 @@ import { toast } from "react-toastify";
 const BookItem = ({ book }) => {
   const [copiesAvailable, setCopiesAvailable] = useState(book.copiesAvailable);
   const [isBorrowed, setIsBorrowed] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
 
+  // Check if the book has already been borrowed
   useEffect(() => {
     const checkIfBorrowed = async () => {
       try {
@@ -30,9 +32,34 @@ const BookItem = ({ book }) => {
     checkIfBorrowed();
   }, [book._id]);
 
+  // Check if the book has already been favorited
+  useEffect(() => {
+    const checkIfFavorited = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const { data: favoriteBooks } = await axios.get(
+          "http://localhost:5000/api/favorites",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const isBookFavorited = favoriteBooks.some(
+          (favoriteBook) => favoriteBook._id === book._id
+        );
+        setIsFavorited(isBookFavorited);
+      } catch (error) {
+        console.error("Error checking favorite status", error);
+      }
+    };
+
+    checkIfFavorited();
+  }, [book._id]);
+
   const handleBorrow = async () => {
     try {
-      const token = localStorage.getItem("token"); // 获取存储在 localStorage 中的用户 token
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         `http://localhost:5000/api/books/borrow/${book._id}`,
         {},
@@ -43,10 +70,35 @@ const BookItem = ({ book }) => {
         }
       );
 
-      // 成功借书后，更新剩余数量
+      // Successfully borrowed the book, update the available copies and borrow status
       setCopiesAvailable(copiesAvailable - 1);
-      setIsBorrowed(true); // 更新借阅状态
+      setIsBorrowed(true);
       toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "An error occurred");
+    }
+  };
+
+  const handleFavoriteToggle = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const url = isFavorited
+        ? `http://localhost:5000/api/favorites/${book._id}`
+        : `http://localhost:5000/api/favorites/${book._id}`;
+      const method = isFavorited ? "DELETE" : "POST";
+
+      await axios({
+        method,
+        url,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setIsFavorited(!isFavorited);
+      toast.success(
+        isFavorited ? "Removed from favorites" : "Added to favorites"
+      );
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred");
     }
@@ -62,10 +114,18 @@ const BookItem = ({ book }) => {
           Copies Available: {copiesAvailable}
         </p>
       </div>
-      <div className="p-4 bg-gray-50">
+      <div className="p-4 bg-gray-50 flex justify-between">
+        <button
+          onClick={handleFavoriteToggle}
+          className={`${
+            isFavorited ? "text-yellow-500" : "text-gray-500"
+          } text-lg`}
+        >
+          {isFavorited ? "★" : "☆"}
+        </button>
         <button
           onClick={handleBorrow}
-          disabled={copiesAvailable === 0 || isBorrowed} // 如果书籍已被借阅，禁用按钮
+          disabled={copiesAvailable === 0 || isBorrowed}
           className={`${
             copiesAvailable === 0 || isBorrowed
               ? "bg-gray-400"

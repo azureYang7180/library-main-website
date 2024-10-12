@@ -5,11 +5,12 @@ const UserDropdown = ({ username, onLogout }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
+  // Toggle dropdown visibility
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  // 点击页面空白处时自动关闭下拉菜单
+  // Close dropdown when clicking outside of it
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownOpen && !event.target.closest(".dropdown-container")) {
@@ -31,12 +32,18 @@ const UserDropdown = ({ username, onLogout }) => {
         {username}
       </button>
       {dropdownOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
+        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
           <button
             onClick={() => navigate("/profile")}
             className="block w-full text-left px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-200 transition duration-150 ease-in-out rounded-t-lg"
           >
             Profile
+          </button>
+          <button
+            onClick={() => navigate("/favorites")}
+            className="block w-full text-left px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-200 transition duration-150 ease-in-out"
+          >
+            Favorites
           </button>
           <button
             onClick={onLogout}

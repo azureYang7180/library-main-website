@@ -6,6 +6,7 @@ import UserLogin from "./components/UserLogin";
 import BookList from "./components/BookList";
 import Profile from "./components/Profile";
 import BorrowedBooks from "./components/BorrowedBooks";
+import Favorites from "./components/Favorites";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -57,6 +58,7 @@ const AppContent = ({ username, setUsername }) => {
           <Route path="/books" element={<BookList />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/borrowed-books" element={<BorrowedBooks />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </div>
     </>
