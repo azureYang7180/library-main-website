@@ -2,17 +2,44 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Bar, Pie } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement, // For Pie chart
+} from "chart.js";
+
+// Register chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
 const Profile = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [avatar, setAvatar] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [borrowHistory, setBorrowHistory] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [chartType, setChartType] = useState("bar"); // Default chart type is bar
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
 
   useEffect(() => {
-    const loadAvatar = async () => {
+    const loadProfileData = async () => {
       const token = localStorage.getItem("token");
       try {
         const { data } = await axios.get(
@@ -24,14 +51,26 @@ const Profile = () => {
           }
         );
         setAvatarUrl(data.avatar);
+
+        const borrowHistoryResponse = await axios.get(
+          "http://localhost:5000/api/users/all-borrowed-books",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setBorrowHistory(borrowHistoryResponse.data);
+        setFilteredBooks(borrowHistoryResponse.data);
       } catch (error) {
-        console.error("Error loading avatar", error);
+        console.error("Error loading profile data", error);
       }
     };
 
-    loadAvatar();
+    loadProfileData();
   }, []);
 
+  // 处理密码更新
   const handlePasswordChange = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
@@ -53,6 +92,7 @@ const Profile = () => {
     }
   };
 
+  // 处理头像上传
   const handleAvatarUpload = async (e) => {
     const file = e.target.files[0];
     setAvatar(file);
@@ -80,9 +120,72 @@ const Profile = () => {
     }
   };
 
+  // 生成类别数据
+  const getCategoryData = () => {
+    const categoryCount = {};
+
+    filteredBooks.forEach((book) => {
+      const category = book.category || "Uncategorized";
+      if (categoryCount[category]) {
+        categoryCount[category]++;
+      } else {
+        categoryCount[category] = 1;
+      }
+    });
+
+    const labels = Object.keys(categoryCount);
+    const data = Object.values(categoryCount);
+    const backgroundColors = [
+      "rgba(255, 99, 132, 0.6)",
+      "rgba(54, 162, 235, 0.6)",
+      "rgba(75, 192, 192, 0.6)",
+      "rgba(255, 206, 86, 0.6)",
+      "rgba(153, 102, 255, 0.6)",
+      "rgba(255, 159, 64, 0.6)",
+      "rgba(231, 233, 237, 0.6)",
+    ];
+
+    return {
+      labels,
+      datasets: [
+        {
+          label: "Books Borrowed by Category",
+          data,
+          backgroundColor: backgroundColors.slice(0, labels.length),
+        },
+      ],
+    };
+  };
+
+  // 日期范围过滤
+  const filterByDate = () => {
+    if (!startDate || !endDate) {
+      toast.error("Please select both start and end date");
+      return;
+    }
+
+    const filtered = borrowHistory.filter((entry) => {
+      const borrowDate = new Date(entry.borrowDate);
+      return (
+        borrowDate >= new Date(startDate) && borrowDate <= new Date(endDate)
+      );
+    });
+
+    setFilteredBooks(filtered);
+  };
+
+  // 重置筛选
+  const resetFilter = () => {
+    setFilteredBooks(borrowHistory);
+    setStartDate("");
+    setEndDate("");
+  };
+
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl text-center font-bold mb-6">Profile</h1>
+      <h1 className="text-3xl text-center font-bold mb-12">Profile</h1>
+
+      {/* 将头像和密码部分保留在左边 */}
       <div className="flex justify-start">
         <div className="w-1/3 flex flex-col items-center">
           {avatarUrl && (
@@ -108,8 +211,10 @@ const Profile = () => {
             </label>
           </div>
         </div>
+
         <div className="w-2/3">
-          <form onSubmit={handlePasswordChange} className="mb-4">
+          {/* 密码更新部分保留在右边 */}
+          <form onSubmit={handlePasswordChange} className="mb-8">
             <div className="mb-4">
               <label className="block text-gray-700">New Password</label>
               <input
@@ -144,6 +249,76 @@ const Profile = () => {
               </button>
             </div>
           </form>
+        </div>
+      </div>
+
+      {/* 图表部分独立居中 */}
+      <div className="flex justify-center items-center flex-col mt-12">
+        <h2 className="text-2xl font-semibold mb-6">
+          Books Borrowed by Category
+        </h2>
+        <div className="flex justify-center items-center mb-4">
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="border p-2 rounded mr-4"
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="border p-2 rounded mr-4"
+          />
+          <button
+            onClick={filterByDate}
+            className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700"
+          >
+            Filter by Date
+          </button>
+          <button
+            onClick={resetFilter}
+            className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-400 ml-4"
+          >
+            Reset
+          </button>
+        </div>
+
+        <div className="flex justify-center w-full">
+          {filteredBooks.length > 0 ? (
+            chartType === "bar" ? (
+              <Bar
+                data={getCategoryData()}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                }}
+                height={600}
+                width={900}
+              />
+            ) : (
+              <Pie
+                data={getCategoryData()}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                }}
+                height={500}
+                width={700}
+              />
+            )
+          ) : (
+            <p className="text-center">No borrowed books available.</p>
+          )}
+        </div>
+
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={() => setChartType(chartType === "bar" ? "pie" : "bar")}
+            className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-400"
+          >
+            {chartType === "bar" ? "Switch to Pie" : "Switch to Bar"}
+          </button>
         </div>
       </div>
     </div>
