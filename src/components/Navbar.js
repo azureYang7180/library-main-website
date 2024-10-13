@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import UserDropdown from "./UserDropdown";
 
-const Navbar = ({ username, avatar, onLogout }) => {
+const Navbar = ({ username, avatar, onLogout, notifications }) => {
   return (
     <nav className="bg-indigo-600 p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
@@ -34,8 +34,12 @@ const Navbar = ({ username, avatar, onLogout }) => {
                   className="w-8 h-8 rounded-full object-cover"
                 />
               )}
-              {/* User Dropdown */}
-              <UserDropdown username={username} onLogout={onLogout} />
+              {/* User Dropdown with notifications */}
+              <UserDropdown
+                username={username}
+                onLogout={onLogout}
+                notifications={notifications}
+              />
             </div>
           ) : (
             <>
