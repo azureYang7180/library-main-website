@@ -6,15 +6,21 @@ const Navbar = ({ username, avatar, onLogout, notifications }) => {
   return (
     <nav className="bg-customPurple py-8 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
-        {/* Logo or Title */}
-        <Link
-          to="/"
-          className="text-white font-bold text-xl hover:text-gray-200"
-        >
-          Library System
-        </Link>
+        {/* Logo and Title */}
+        <div className="flex items-center space-x-4">
+          {" "}
+          {/* 增加 space-x-2 控制间距 */}
+          <Link
+            to="/"
+            className="text-white font-bold text-xl hover:text-gray-200"
+          >
+            Library System
+          </Link>
+          {/* UQ Logo */}
+          <img src="/uq-logo.svg" alt="UQ Logo" className="w-30 h-10" />
+        </div>
 
-        {/* Right Side of Navbar */}
+        {/* Right Side */}
         <div className="flex items-center space-x-4">
           {/* Show Borrowed Books Link when user is logged in */}
           {username && (
