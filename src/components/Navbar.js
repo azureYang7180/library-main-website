@@ -55,13 +55,13 @@ const Navbar = ({ username, avatar, onLogout, notifications }) => {
               {/* If no user is logged in, show Register and Login buttons */}
               <Link
                 to="/register"
-                className="text-white text-xl font-bold hover:text-gray-200"
+                className="text-white text-lg font-bold hover:text-gray-200"
               >
                 Register
               </Link>
               <Link
                 to="/login"
-                className="text-white text-xl font-bold hover:text-gray-200"
+                className="text-white text-lg font-bold hover:text-gray-200"
               >
                 Login
               </Link>
