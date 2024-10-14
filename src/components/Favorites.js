@@ -47,6 +47,7 @@ const Favorites = () => {
         data.forEach((book) => {
           if (
             book.copiesAvailable > 0 &&
+            !book.isBorrowed &&
             !newNotifiedBooks.includes(book._id)
           ) {
             toast.info(`${book.title} is now available for borrowing.`);
