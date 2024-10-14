@@ -183,7 +183,9 @@ const Profile = () => {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl text-center font-bold mb-12">Profile</h1>
+      <h1 className="text-3xl text-customPurple text-center font-bold mb-12">
+        Profile
+      </h1>
 
       {/* 将头像和密码部分保留在左边 */}
       <div className="flex justify-start">
@@ -252,9 +254,8 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* 图表部分独立居中 */}
       <div className="flex justify-center items-center flex-col mt-12">
-        <h2 className="text-2xl font-semibold mb-6">
+        <h2 className="text-2xl text-customPurple font-semibold mb-6">
           Books Borrowed by Category
         </h2>
         <div className="flex justify-center items-center mb-4">

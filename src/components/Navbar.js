@@ -4,7 +4,7 @@ import UserDropdown from "./UserDropdown";
 
 const Navbar = ({ username, avatar, onLogout, notifications }) => {
   return (
-    <nav className="bg-customPurple p-4 shadow-lg">
+    <nav className="bg-customPurple py-8 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo or Title */}
         <Link
@@ -49,13 +49,13 @@ const Navbar = ({ username, avatar, onLogout, notifications }) => {
               {/* If no user is logged in, show Register and Login buttons */}
               <Link
                 to="/register"
-                className="text-white  font-bold hover:text-gray-200"
+                className="text-white text-xl font-bold hover:text-gray-200"
               >
                 Register
               </Link>
               <Link
                 to="/login"
-                className="text-white  font-bold hover:text-gray-200"
+                className="text-white text-xl font-bold hover:text-gray-200"
               >
                 Login
               </Link>

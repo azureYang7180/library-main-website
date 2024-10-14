@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
-  const [notifiedBooks, setNotifiedBooks] = useState([]); // 跟踪已通知的书籍
-  const notifiedBooksRef = useRef(notifiedBooks); // 使用 useRef 来追踪 notifiedBooks
+  const [notifiedBooks, setNotifiedBooks] = useState([]);
+  const notifiedBooksRef = useRef(notifiedBooks);
   const navigate = useNavigate();
-  const [hasFetched, setHasFetched] = useState(false); // 防止重复获取数据
+  const [hasFetched, setHasFetched] = useState(false);
 
   // Function to reset the notification count
   const onResetNotifications = async () => {
@@ -43,37 +43,33 @@ const Favorites = () => {
 
         setFavorites(data);
 
-        // 检查书籍是否有库存，并且是否需要通知用户
-        let newNotifiedBooks = [...notifiedBooksRef.current]; // 使用 ref 保存的 notifiedBooks
+        let newNotifiedBooks = [...notifiedBooksRef.current];
         data.forEach((book) => {
           if (
             book.copiesAvailable > 0 &&
             !newNotifiedBooks.includes(book._id)
           ) {
             toast.info(`${book.title} is now available for borrowing.`);
-            newNotifiedBooks.push(book._id); // 添加到通知书籍中
+            newNotifiedBooks.push(book._id);
           }
         });
 
-        // 更新通知过的书籍ID
         if (newNotifiedBooks.length !== notifiedBooksRef.current.length) {
           setNotifiedBooks(newNotifiedBooks);
-          notifiedBooksRef.current = newNotifiedBooks; // 同步 ref 值
+          notifiedBooksRef.current = newNotifiedBooks;
         }
 
-        // 重置通知
         await onResetNotifications();
       } catch (error) {
         toast.error("Error fetching favorites");
       }
     };
 
-    // 仅在第一次加载时获取数据
     if (!hasFetched) {
       fetchFavorites();
-      setHasFetched(true); // 标记数据已加载，避免重复获取
+      setHasFetched(true);
     }
-  }, [hasFetched]); // 依赖项仅为 hasFetched
+  }, [hasFetched]);
 
   const handleBorrow = async (bookId) => {
     try {
@@ -115,7 +111,9 @@ const Favorites = () => {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold text-center mb-6">My Favorite Books</h1>
+      <h1 className="text-3xl font-bold text-customPurple text-center mb-6">
+        My Favorite Books
+      </h1>
       {favorites.length === 0 ? (
         <p className="text-center">You haven't favorited any books.</p>
       ) : (

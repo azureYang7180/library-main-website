@@ -33,7 +33,9 @@ const UserRegister = ({ setUsername }) => {
     <div className="container mx-auto mt-48">
       {" "}
       {/* 使用 mt-16 将内容向下移动 */}
-      <h1 className="text-3xl text-center font-bold mb-6">Register</h1>
+      <h1 className="text-3xl text-center text-customPurple font-bold mb-6">
+        Register
+      </h1>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto">
         <div className="mb-4">
           <label className="block text-gray-700">Username</label>

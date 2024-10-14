@@ -29,7 +29,7 @@ const BookList = () => {
   return (
     <div className="min-h-screen">
       <div className="container mx-auto py-10">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+        <h1 className="text-3xl text-customPurple font-bold text-center  mb-6">
           Library Books
         </h1>
         <div className="flex justify-center mb-6">
@@ -38,7 +38,7 @@ const BookList = () => {
             placeholder="Search books..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border border-gray-300 p-2 rounded-lg w-full max-w-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+            className="border border-gray-300 p-2 rounded-lg w-full max-w-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-300"
           />
         </div>
 
