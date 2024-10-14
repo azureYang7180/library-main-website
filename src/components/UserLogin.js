@@ -28,9 +28,14 @@ const UserLogin = ({ setUsername }) => {
   };
 
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+    <div className="container mx-auto -mt-20 flex flex-col items-center justify-center min-h-screen">
+      <img src="/lock2.svg" alt="Lock Icon" className="mb-4 w-40 h-40" />
+
+      <h2 className="text-3xl font-bold text-customPurple mb-6">
+        Library Authenticate
+      </h2>
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="max-w-md w-full">
         <div className="mb-4">
           <label className="block text-gray-700">Email</label>
           <input
@@ -49,6 +54,8 @@ const UserLogin = ({ setUsername }) => {
             className="border p-2 rounded w-full"
           />
         </div>
+
+        {/* Login Button */}
         <div className="flex justify-center">
           <button
             type="submit"
