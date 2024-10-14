@@ -130,7 +130,7 @@ const BookItem = ({ book }) => {
           className={`${
             copiesAvailable === 0 || isBorrowed
               ? "bg-gray-400"
-              : "bg-indigo-600 hover:bg-indigo-500"
+              : "bg-customPurple hover:bg-customLightPurple"
           } text-white px-4 py-2 rounded transition-colors duration-200`}
         >
           {isBorrowed

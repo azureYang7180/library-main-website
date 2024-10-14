@@ -52,7 +52,7 @@ const UserLogin = ({ setUsername }) => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-indigo-600 text-white py-2 px-4 w-full rounded hover:bg-indigo-500"
+            className="bg-customPurple text-white py-2 px-4 w-full rounded hover:bg-customLightPurple"
           >
             Login
           </button>

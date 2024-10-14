@@ -4,10 +4,13 @@ import UserDropdown from "./UserDropdown";
 
 const Navbar = ({ username, avatar, onLogout, notifications }) => {
   return (
-    <nav className="bg-indigo-600 p-4 shadow-lg">
+    <nav className="bg-customPurple p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo or Title */}
-        <Link to="/" className="text-white font-bold text-xl">
+        <Link
+          to="/"
+          className="text-white font-bold text-xl hover:text-gray-200"
+        >
           Library System
         </Link>
 
@@ -17,7 +20,7 @@ const Navbar = ({ username, avatar, onLogout, notifications }) => {
           {username && (
             <Link
               to="/borrowed-books"
-              className="text-white text-sm font-bold hover:text-gray-200"
+              className="text-white font-bold hover:text-gray-200"
             >
               Borrowed Books
             </Link>

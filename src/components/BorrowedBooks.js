@@ -78,7 +78,7 @@ const BorrowedBooks = () => {
       <div className="flex justify-center mt-8">
         <button
           onClick={() => navigate("/")}
-          className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-500"
+          className="bg-customPurple text-white py-2 px-4 rounded hover:bg-customLightPurple"
         >
           Back to Home
         </button>

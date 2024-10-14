@@ -24,7 +24,7 @@ const UserDropdown = ({ username, onLogout, notifications }) => {
     <div className="relative inline-block text-left dropdown-container">
       <button
         onClick={toggleDropdown}
-        className="text-white font-bold px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 transition duration-150 ease-in-out"
+        className="text-white font-bold px-4 py-2 rounded-md bg-customPurple hover:bg-customLightPurple transition duration-150 ease-in-out"
       >
         {username}
         {notifications > 0 && (

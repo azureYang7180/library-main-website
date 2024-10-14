@@ -205,7 +205,7 @@ const Profile = () => {
             />
             <label
               htmlFor="avatarUpload"
-              className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 cursor-pointer"
+              className="bg-customPurple text-white py-2 px-4 rounded hover:bg-customLightPurple cursor-pointer"
             >
               Upload Avatar
             </label>
@@ -237,7 +237,7 @@ const Profile = () => {
             <div className="flex space-x-4">
               <button
                 type="submit"
-                className="bg-indigo-600 text-white py-2 px-8 w-fit rounded hover:bg-indigo-700"
+                className="bg-customPurple text-white py-2 px-8 w-fit rounded hover:bg-customLightPurple"
               >
                 Update Password
               </button>
@@ -272,7 +272,7 @@ const Profile = () => {
           />
           <button
             onClick={filterByDate}
-            className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700"
+            className="bg-customPurple text-white py-2 px-4 rounded hover:bg-customLightPurple"
           >
             Filter by Date
           </button>

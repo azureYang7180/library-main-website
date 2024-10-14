@@ -132,7 +132,7 @@ const Favorites = () => {
                   className={`${
                     book.isBorrowed
                       ? "bg-gray-400"
-                      : "bg-indigo-600 hover:bg-indigo-500"
+                      : "bg-customPurple hover:bg-customLightPurple"
                   } text-white px-4 py-2 rounded transition-colors duration-200`}
                 >
                   {book.isBorrowed ? "Borrowed" : "Borrow"}
@@ -152,7 +152,7 @@ const Favorites = () => {
       <div className="flex justify-center mt-8">
         <button
           onClick={() => navigate("/")}
-          className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-500"
+          className="bg-customPurple text-white py-2 px-4 rounded hover:bg-customLightPurple "
         >
           Back to Home
         </button>
